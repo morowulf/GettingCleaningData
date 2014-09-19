@@ -85,23 +85,14 @@ run_analysis <- function( ) {
             }
         }
     
-        # Part 2: Extract only the measurements on the mean and standard deviation
-        #         for each measurment.
-        # -------------------------------------------------------------------------
-
-        sub_idx = grep("Subject|Activity|mean|std", as.character(attributes(combined_list)$names), ignore.case=TRUE);
-    
-        combined_list = combined_list[,sub_idx];
-    
-
         # Part 3: Use descriptive activity names to name the activities in the
         #         data set.
         # ---------------------------------------------------------------------
-
+        
         if ( file.exists(activity_labels_file) )
         {
             activity_labels <- read.table(activity_labels_file);
-        
+            
             for ( i in seq_len(dim(combined_list)[1]) )
             {
                 if ( any (activity_labels[,1] == combined_list$Activity[i]) )
@@ -114,8 +105,15 @@ run_analysis <- function( ) {
                 }
             }
         }
+        
+        
+        # Part 2: Extract only the measurements on the mean and standard deviation
+        #         for each measurment.
+        # -------------------------------------------------------------------------
+
+        filtered_list = combined_list[,grep("Subject|Activity|-mean|-std", as.character(attributes(combined_list)$names), ignore.case=TRUE)];
     
-    
+
         # Part 5: Create a second, independent tidy data set with the average of each variable for each
         #         activity and each subject.
         # ---------------------------------------------------------------------
@@ -123,21 +121,21 @@ run_analysis <- function( ) {
         new_list = data.frame();
     
         # Put together the averages for all activities
-        activity_list = sort(unique(combined_list$Activity));
+        activities = sort(unique(filtered_list$Activity));
     
-        for ( i in seq_len(length(activity_list)) )
+        for ( i in seq_len(length(activities)) )
         {
-            new_list = rbind(new_list, data.frame(t(apply(combined_list[combined_list["Activity"] == activity_list[i], 3:dim(combined_list)[2]], 2, mean))));
-            rownames(new_list)[dim(new_list)[1]] <- paste("Avg...Activity:", as.character(activity_list[i]));
+            new_list = rbind(new_list, data.frame(t(apply(filtered_list[filtered_list["Activity"] == activities[i], 3:dim(filtered_list)[2]], 2, mean))));
+            rownames(new_list)[dim(new_list)[1]] <- paste("Avg...Activity:", as.character(activities[i]));
         }
     
         # Put together the averages for all subjects
-        subject_list = sort(unique(combined_list$Subject));
+        subjects = sort(unique(combined_list$Subject));
     
-        for ( i in seq_len(length(subject_list)) )
+        for ( i in seq_len(length(subjects)) )
         {
-            new_list = rbind(new_list, data.frame(t(apply(combined_list[combined_list["Subject"] == subject_list[i], 3:dim(combined_list)[2]], 2, mean))));
-            rownames(new_list)[dim(new_list)[1]] <- paste("Avg...Subject:", as.character(subject_list[i]));
+            new_list = rbind(new_list, data.frame(t(apply(filtered_list[filtered_list["Subject"] == subjects[i], 3:dim(filtered_list)[2]], 2, mean))));
+            rownames(new_list)[dim(new_list)[1]] <- paste("Avg...Subject:", as.character(subjects[i]));
         }
     
         # Output tidy merged dataset
