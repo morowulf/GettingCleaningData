@@ -34,12 +34,21 @@ in the raw dataset for each Activity and each Subject (as required by requiremen
 
 Code Book:
 ----------
-* activity_labels_file:  (Character)       Path to the file which contains the labels for the different activities
-* activity_list:         (Character)       Array of unique activities in the merged dataset
-* base_dir:              (Character)       Path to the Samsung data
-* combined_list:         (Dataframe)       Structure for the merged dataset
-* combined_list1:        (Dataframe)       Temporary structure for the test dataset
-* combined_list2:        (Dataframe)       Temporary structure for the training dataset
-* features_labels_file:  (Character)       Path to the file which contains the labels for the different variables
-* new_list:              (Dataframe)       Structure which contains the dataset with the variables averaged
-* subject_list:          (Character)       Array of unique subject in the merged dataset
+* act_file:               (Character)       Path to the file which lists the activity for each observation
+* act_list:               (Dataframe)       Structure which maps the activity to each observation
+* activity_labels_file:   (Character)       Path to the file which contains the labels for the different activities
+* activity_list:          (Character)       Array of unique activities in the merged dataset
+* base_dir:               (Character)       Path to the Samsung data
+* combined_list:          (Dataframe)       Structure for the merged dataset
+* combined_list1:         (Dataframe)       Temporary structure for the test dataset
+* combined_list2:         (Dataframe)       Temporary structure for the training dataset
+* features_labels_file:   (Character)       Path to the file which contains the labels for the different variables
+* file_type:              (Character)       String which specifies whether the data is test data or training data
+* new_list:               (Dataframe)       Structure which contains the dataset with the variables averaged
+* obs_file:               (Character)       Path to a file which lists all the observations
+* obs_labels:             (Dataframe)       Structure which contains the variable names
+* sub_idx:                (Numeric)         Array of column numbers which contain the desired data
+* sub_dir:                (Character)       Path to the subdirectory which contains either the test or training data
+* subject_file:           (Character)       Path to a file which lists the subject for each observation
+* subject_list:           (Character)       Structure which maps the subject to each observation
+* subject_list:           (Character)       Array of unique subject in the merged dataset
