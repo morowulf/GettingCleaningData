@@ -37,7 +37,7 @@ Script Variables:
 * act_file:               (Character)       Path to the file which lists the activity for each observation
 * act_list:               (Dataframe)       Structure which maps the activity to each observation
 * activity_labels_file:   (Character)       Path to the file which contains the labels for the different activities
-* activity_list:          (Character)       Array of unique activities in the merged dataset
+* activities:             (Character)       Array of unique activities in the merged dataset
 * base_dir:               (Character)       Path to the Samsung data
 * combined_list:          (Dataframe)       Structure for the merged dataset
 * combined_list1:         (Dataframe)       Temporary structure for the test dataset
@@ -48,15 +48,78 @@ Script Variables:
 * obs_file:               (Character)       Path to a file which lists all the observations
 * obs_labels:             (Dataframe)       Structure which contains the variable names
 * sub_idx:                (Numeric)         Array of column numbers which contain the desired data
-* sub_dir:                (Character)       Path to the subdirectory which contains either the test or training data
 * subject_file:           (Character)       Path to a file which lists the subject for each observation
 * subject_list:           (Character)       Structure which maps the subject to each observation
-* subject_list:           (Character)       Array of unique subject in the merged dataset
+* subjects:               (Character)       Array of unique subject in the merged dataset
 
 Code Book:
 ----------
+----------
 
-Variable Names, Units, Description, etc.
+Raw Data
+--------
+
+The features selected for the raw dataset came from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+
+These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+* tBodyAcc-XYZ
+* tGravityAcc-XYZ
+* tBodyAccJerk-XYZ
+* tBodyGyro-XYZ
+* tBodyGyroJerk-XYZ
+* tBodyAccMag
+* tGravityAccMag
+* tBodyAccJerkMag
+* tBodyGyroMag
+* tBodyGyroJerkMag
+* fBodyAcc-XYZ
+* fBodyAccJerk-XYZ
+* fBodyGyro-XYZ
+* fBodyAccMag
+* fBodyAccJerkMag
+* fBodyGyroMag
+* fBodyGyroJerkMag
+
+The set of variables that were estimated from these signals are: 
+
+* mean(): Mean value
+* std(): Standard deviation
+* mad(): Median absolute deviation 
+* max(): Largest value in array
+* min(): Smallest value in array
+* sma(): Signal magnitude area
+* energy(): Energy measure. Sum of the squares divided by the number of values. 
+* iqr(): Interquartile range 
+* entropy(): Signal entropy
+* arCoeff(): Autorregresion coefficients with Burg order equal to 4
+* correlation(): correlation coefficient between two signals
+* maxInds(): index of the frequency component with largest magnitude
+* meanFreq(): Weighted average of the frequency components to obtain a mean frequency
+* skewness(): skewness of the frequency domain signal 
+* kurtosis(): kurtosis of the frequency domain signal 
+* bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
+* angle(): Angle between to vectors.
+
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
+
+* gravityMean
+* tBodyAccMean
+* tBodyAccJerkMean
+* tBodyGyroMean
+* tBodyGyroJerkMean
+
+Processed Data:
+---------------
+
+merged_data.txt contains the averages of different variables in the dataset for different actitivities and different subjects.  The variables in the output dataset are listed below in column order.   The first 7 rows show the averages
+of each variable for a different activity (in alphabetical order) and the last 30 rows show the averages of each variable for a different subject (in numerical order).  Each of the variables represents a mean or a standard deviation of a value which was either measured (with an accelerometer or gyroscope) or estimated in the raw dataset described above.   
+
 * 1:   "tBodyAcc.mean...X" 
 * 2:   "tBodyAcc.mean...Y" 
 * 3:   "tBodyAcc.mean...Z"
@@ -136,12 +199,5 @@ Variable Names, Units, Description, etc.
 * 77:  "fBodyBodyGyroJerkMag.mean.."
 * 78:  "fBodyBodyGyroJerkMag.std.."
 * 79:  "fBodyBodyGyroJerkMag.meanFreq.."
-* 80:  "angle.tBodyAccMean.gravity."
-* 81:  "angle.tBodyAccJerkMean..gravityMean."
-* 82:  "angle.tBodyGyroMean.gravityMean."
-* 83:  "angle.tBodyGyroJerkMean.gravityMean."
-* 84:  "angle.X.gravityMean."
-* 85:  "angle.Y.gravityMean."
-* 86:  "angle.Z.gravityMean."
 
 
