@@ -18,7 +18,7 @@ run_analysis <- function( ) {
         # ------------------------------------------------------------
     
         # Process the test data
-        file_type = "test";
+        file_type <- "test";
         sub_dir <- paste(base_dir, file_type, sep = "/");
         subject_file <- paste(sub_dir, paste("subject_", file_type, ".txt", sep = ""), sep = "/");
         act_file <- paste(sub_dir, paste("y_", file_type, ".txt", sep = ""), sep = "/");
@@ -40,7 +40,7 @@ run_analysis <- function( ) {
         }
 
         # Process the train data
-        file_type = "train";
+        file_type <- "train";
         sub_dir <- paste(base_dir, file_type, sep = "/");
         subject_file <- paste(sub_dir, paste("subject_", file_type, ".txt", sep = ""), sep = "/");
         act_file <- paste(sub_dir, paste("y_", file_type, ".txt", sep = ""), sep = "/");
@@ -111,30 +111,30 @@ run_analysis <- function( ) {
         #         for each measurment.
         # -------------------------------------------------------------------------
 
-        filtered_list = combined_list[,grep("Subject|Activity|-mean|-std", as.character(attributes(combined_list)$names), ignore.case=TRUE)];
+        filtered_list <- combined_list[,grep("Subject|Activity|-mean|-std", gsub("meanFreq", "", as.character(attributes(combined_list)$names)), ignore.case=TRUE)];
     
 
         # Part 5: Create a second, independent tidy data set with the average of each variable for each
         #         activity and each subject.
         # ---------------------------------------------------------------------
     
-        new_list = data.frame();
+        new_list <- data.frame();
     
         # Put together the averages for all activities
         activities = sort(unique(filtered_list$Activity));
     
         for ( i in seq_len(length(activities)) )
         {
-            new_list = rbind(new_list, data.frame(t(apply(filtered_list[filtered_list["Activity"] == activities[i], 3:dim(filtered_list)[2]], 2, mean))));
+            new_list <- rbind(new_list, data.frame(t(apply(filtered_list[filtered_list["Activity"] == activities[i], 3:dim(filtered_list)[2]], 2, mean))));
             rownames(new_list)[dim(new_list)[1]] <- paste("Avg...Activity:", as.character(activities[i]));
         }
     
         # Put together the averages for all subjects
-        subjects = sort(unique(combined_list$Subject));
+        subjects <- sort(unique(combined_list$Subject));
     
         for ( i in seq_len(length(subjects)) )
         {
-            new_list = rbind(new_list, data.frame(t(apply(filtered_list[filtered_list["Subject"] == subjects[i], 3:dim(filtered_list)[2]], 2, mean))));
+            new_list <- rbind(new_list, data.frame(t(apply(filtered_list[filtered_list["Subject"] == subjects[i], 3:dim(filtered_list)[2]], 2, mean))));
             rownames(new_list)[dim(new_list)[1]] <- paste("Avg...Subject:", as.character(subjects[i]));
         }
     
